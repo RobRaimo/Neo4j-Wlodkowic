@@ -1,0 +1,21 @@
+/*
+
+    // Java JDBC caller
+    private void Connection(String vrCQL) throws SQLException{
+        hourglassCursor();
+        // Connect
+        Connection con = DriverManager.getConnection("jdbc:neo4j:bolt://localhost", "neo4j", "password");
+        // Querying
+        try (Statement stmt = con.createStatement()) {
+            ResultSet rs = stmt.executeQuery(vrCQL);
+            while (rs.next()) {
+                jtaTextfield.append(rs.getString("n")+ "\n");
+            }
+        } catch(Exception ex) {
+            jtaTextfield.append("Exception catched...\n" + ex.toString());
+            normalCursor();
+        }
+        con.close();
+        normalCursor();
+    }
+*/
