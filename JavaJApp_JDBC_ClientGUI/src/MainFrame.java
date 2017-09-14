@@ -728,7 +728,9 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH (n) RETURN n LIMIT " + jtfMatchLimitN.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            DBConnector_JDBC DBConJDBC = new DBConnector_JDBC();
+            DBConJDBC.execute(vrCQL);
+            //Connection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -964,6 +966,7 @@ public class MainFrame extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+         
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
