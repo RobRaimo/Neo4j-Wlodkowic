@@ -19,8 +19,6 @@ import java.util.logging.Logger;
  */
 public class MainFrame extends javax.swing.JFrame {
     
-    String vrCQL = null;
-    
     /**
      * Creates new form MainFrame
      */
@@ -727,7 +725,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void tnRDReadANodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tnRDReadANodeActionPerformed
         // TODO add your handling code here:
-        vrCQL = "MATCH (n) RETURN n LIMIT " + jtfMatchLimitN.getText();
+        String vrCQL = "MATCH (n) RETURN n LIMIT " + jtfMatchLimitN.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
             Connection(vrCQL);
@@ -739,7 +737,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void tnRDReadARelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tnRDReadARelActionPerformed
         // TODO add your handling code here:
-        vrCQL = "MATCH n=()-->() RETURN n LIMIT " + jtfMatchLimitR.getText();
+        String vrCQL = "MATCH n=()-->() RETURN n LIMIT " + jtfMatchLimitR.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
             Connection(vrCQL);
@@ -751,7 +749,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnMatchNodeSelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchNodeSelActionPerformed
         // TODO add your handling code here:
-        vrCQL = "MATCH (n:" + jcbSelectNode.getSelectedItem() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
+        String vrCQL = "MATCH (n:" + jcbSelectNode.getSelectedItem() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
             Connection(vrCQL);
@@ -763,7 +761,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnMatchNodeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchNodeTextActionPerformed
         // TODO add your handling code here:
-        vrCQL = "MATCH (n:" + jtfMatchNText.getText() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
+        String vrCQL = "MATCH (n:" + jtfMatchNText.getText() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
             Connection(vrCQL);
@@ -775,7 +773,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnMatchRelationSelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchRelationSelActionPerformed
         // TODO add your handling code here:
-        vrCQL = "MATCH n=()-[r:" + jcbSelectRelation.getSelectedItem() + "]->() RETURN n LIMIT " + jtfMatchLimitR.getText();
+        String vrCQL = "MATCH n=()-[r:" + jcbSelectRelation.getSelectedItem() + "]->() RETURN n LIMIT " + jtfMatchLimitR.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
             Connection(vrCQL);
@@ -787,7 +785,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnMatchRelationTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchRelationTextActionPerformed
         // TODO add your handling code here: jtfMatchRText
-        vrCQL = "MATCH n=()-[r:" + jtfMatchRText.getText() + "]->() RETURN n LIMIT " + jtfMatchLimitR.getText();
+        String vrCQL = "MATCH n=()-[r:" + jtfMatchRText.getText() + "]->() RETURN n LIMIT " + jtfMatchLimitR.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
             Connection(vrCQL);
@@ -807,7 +805,8 @@ public class MainFrame extends javax.swing.JFrame {
         String vrPrtValue1 = jtfNodePropertyValue1.getText();
         String vrProperty2 = jtfNodeProperty2.getText();
         String vrPrtValue2 = jtfNodePropertyValue2.getText();
-        if ( jcbSelCreateNode.getSelectedItem().toString() == "Developers" ) {
+        String vrCQL = "";
+        if ( "Developers".equals(jcbSelCreateNode.getSelectedItem().toString()) ) {
             vrCQL = "CREATE (n:" + vrLabel + " {" + vrProperty1 +":'" + vrPrtValue1 + "', " + vrProperty2 + ":'" + vrPrtValue2 + "'}) RETURN n";
         } else {
             vrCQL = "CREATE (n:" + vrLabel + " {" + vrProperty1 +":'" + vrPrtValue1 + "'}) RETURN n";
@@ -822,19 +821,19 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateNodeActionPerformed
     
     void setCreateNodeCBox() {
-        if ( jcbSelCreateNode.getSelectedItem().toString() == "Clients" ) {
+        if ( "Clients".equals(jcbSelCreateNode.getSelectedItem().toString()) ) {
             jtfNodeProperty2.setEnabled(false);
             jtfNodePropertyValue2.setEnabled(false);
         }
-        if ( jcbSelCreateNode.getSelectedItem().toString() == "Developers" ) {
+        if ( "Developers".equals(jcbSelCreateNode.getSelectedItem().toString()) ) {
             jtfNodeProperty2.setEnabled(true);
             jtfNodePropertyValue2.setEnabled(true);
         }
-        if ( jcbSelCreateNode.getSelectedItem().toString() == "Projects" ) {
+        if ( "Projects".equals(jcbSelCreateNode.getSelectedItem().toString()) ) {
             jtfNodeProperty2.setEnabled(false);
             jtfNodePropertyValue2.setEnabled(false);
         }
-        if ( jcbSelCreateNode.getSelectedItem().toString() == "Stacks" ) {
+        if ( "Stacks".equals(jcbSelCreateNode.getSelectedItem().toString()) ) {
             jtfNodeProperty2.setEnabled(false);
             jtfNodePropertyValue2.setEnabled(false);
         } 
@@ -851,7 +850,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrToNode = jcbSelToNode.getSelectedItem().toString();
         String vrToNodePr1 = jtfToNodeProperty1.getText();
         String vrToNodePV1 = jtfToNodePropertyValue1.getText();
-        vrCQL = "MATCH (a:" + vrFromNode + "{" + vrFromNodePr1 + ":'" + vrFromNodePV1 + "'}), "
+        String vrCQL = "MATCH (a:" + vrFromNode + "{" + vrFromNodePr1 + ":'" + vrFromNodePV1 + "'}), "
               + "(b:" + vrToNode +  "{" + vrToNodePr1 + ":'" + vrToNodePV1 + "'}) "
               + "CREATE (a)-[r:" + vrLabel + "{" + vrProperty1 + ":'" + vrPrtValue1 +"'}]->(b) ";
               //+ "RETURN a,b";
@@ -865,13 +864,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCreateRelationActionPerformed
 
     void setCreatePropertyCBox() {
-        if ( jcbSelCreateRelation.getSelectedItem().toString() == "ENGAGED_IN" ) {
+        if ( "ENGAGED_IN".equals(jcbSelCreateRelation.getSelectedItem().toString()) ) {
             jtfRelProperty1.setText("skill");
         }
-        if ( jcbSelCreateRelation.getSelectedItem().toString() == "ORDERS_FOR" ) {
+        if ( "ORDERS_FOR".equals(jcbSelCreateRelation.getSelectedItem().toString()) ) {
             jtfRelProperty1.setText("data");
         }
-        if ( jcbSelCreateRelation.getSelectedItem().toString() == "STACKED_ON" ) {
+        if ( "STACKED_ON".equals(jcbSelCreateRelation.getSelectedItem().toString()) ) {
             jtfRelProperty1.setText("usage");
         }
     }
@@ -881,7 +880,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void btnDeleteNodeByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteNodeByIDActionPerformed
         // TODO add your handling code here:
-        vrCQL = "MATCH (n) where id(n) = " + jtfMatchNodeID.getText() + " DETACH DELETE n";
+        String vrCQL = "MATCH (n) where id(n) = " + jtfMatchNodeID.getText() + " DETACH DELETE n";
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
             Connection(vrCQL);
@@ -898,7 +897,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnDeleteRelationByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRelationByIDActionPerformed
         // TODO add your handling code here:
-        vrCQL = "Match ()-[r]-() Where ID(r)=" + jtfMatchRelationID.getText() + " Delete r";
+        String vrCQL = "Match ()-[r]-() Where ID(r)=" + jtfMatchRelationID.getText() + " Delete r";
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
             Connection(vrCQL);
