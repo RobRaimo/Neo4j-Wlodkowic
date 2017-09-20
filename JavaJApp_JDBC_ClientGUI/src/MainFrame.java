@@ -728,9 +728,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH (n) RETURN n LIMIT " + jtfMatchLimitN.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            DBConnector_JDBC DBConJDBC = new DBConnector_JDBC();
-            DBConJDBC.execute(vrCQL);
-            //Connection(vrCQL);
+            Connection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -925,26 +923,17 @@ public class MainFrame extends javax.swing.JFrame {
     // Java JDBC caller
     private void Connection(String vrCQL) throws SQLException{
         hourglassCursor();
-        Connection con = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        // Connect
-        try {
-            con = DriverManager.getConnection("jdbc:neo4j:bolt://localhost", "neo4j", "password");
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(vrCQL);
+        try (Connection con = DBConnector_JDBC.getConnection();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(vrCQL); ){
             while (rs.next()) {
                 jtaTextfield.append(rs.getString("n")+ "\n");
             }
         } catch(SQLException ex) {
             jtaTextfield.append("Exception catched...\n" + ex.toString());
-            normalCursor();
         } finally {
-            con.close();
-            stmt.close();
-            rs.close();
-        }
         normalCursor();
+        }
     }
     
     void hourglassCursor() {
