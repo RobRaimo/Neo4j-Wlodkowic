@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -57,7 +58,7 @@ public class MainFrame extends javax.swing.JFrame {
         jcbSelectNode = new javax.swing.JComboBox<>();
         btnMatchNodeText = new javax.swing.JButton();
         jtfMatchNText = new javax.swing.JTextField();
-        tnRDReadANode = new javax.swing.JButton();
+        btnRDReadANode = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         btnMatchRelationSel = new javax.swing.JButton();
         btnMatchRelationText = new javax.swing.JButton();
@@ -65,7 +66,7 @@ public class MainFrame extends javax.swing.JFrame {
         jcbSelectRelation = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jtfMatchLimitR = new javax.swing.JTextField();
-        tnRDReadARel = new javax.swing.JButton();
+        btnRDReadARel = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jcbSelCreateNode = new javax.swing.JComboBox<>();
@@ -157,10 +158,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         jtfMatchNText.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
-        tnRDReadANode.setText("Match all Nodes");
-        tnRDReadANode.addActionListener(new java.awt.event.ActionListener() {
+        btnRDReadANode.setText("Match all Nodes");
+        btnRDReadANode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tnRDReadANodeActionPerformed(evt);
+                btnRDReadANodeActionPerformed(evt);
             }
         });
 
@@ -172,7 +173,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnMatchNodeText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tnRDReadANode, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                    .addComponent(btnRDReadANode, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
                     .addComponent(btnMatchNodeSel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -201,7 +202,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtfMatchLimitN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tnRDReadANode))
+                    .addComponent(btnRDReadANode))
                 .addGap(6, 6, 6))
         );
 
@@ -230,10 +231,10 @@ public class MainFrame extends javax.swing.JFrame {
         jtfMatchLimitR.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jtfMatchLimitR.setText("25");
 
-        tnRDReadARel.setText("Match all Relations");
-        tnRDReadARel.addActionListener(new java.awt.event.ActionListener() {
+        btnRDReadARel.setText("Match all Relations");
+        btnRDReadARel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tnRDReadARelActionPerformed(evt);
+                btnRDReadARelActionPerformed(evt);
             }
         });
 
@@ -244,7 +245,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tnRDReadARel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRDReadARel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMatchRelationText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMatchRelationSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -272,7 +273,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jtfMatchRText))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tnRDReadARel)
+                    .addComponent(btnRDReadARel)
                     .addComponent(jLabel3)
                     .addComponent(jtfMatchLimitR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -723,36 +724,36 @@ public class MainFrame extends javax.swing.JFrame {
     // READ TAB
     // --------
     
-    private void tnRDReadANodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tnRDReadANodeActionPerformed
+    private void btnRDReadANodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRDReadANodeActionPerformed
         // TODO add your handling code here:
         String vrCQL = "MATCH (n) RETURN n LIMIT " + jtfMatchLimitN.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
         }
-    }//GEN-LAST:event_tnRDReadANodeActionPerformed
+    }//GEN-LAST:event_btnRDReadANodeActionPerformed
 
-    private void tnRDReadARelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tnRDReadARelActionPerformed
+    private void btnRDReadARelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRDReadARelActionPerformed
         // TODO add your handling code here:
         String vrCQL = "MATCH n=()-->() RETURN n LIMIT " + jtfMatchLimitR.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
         }
-    }//GEN-LAST:event_tnRDReadARelActionPerformed
+    }//GEN-LAST:event_btnRDReadARelActionPerformed
 
     private void btnMatchNodeSelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchNodeSelActionPerformed
         // TODO add your handling code here:
         String vrCQL = "MATCH (n:" + jcbSelectNode.getSelectedItem() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -764,7 +765,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH (n:" + jtfMatchNText.getText() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -776,7 +777,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH n=()-[r:" + jcbSelectRelation.getSelectedItem() + "]->() RETURN n LIMIT " + jtfMatchLimitR.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+           tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -788,7 +789,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH n=()-[r:" + jtfMatchRText.getText() + "]->() RETURN n LIMIT " + jtfMatchLimitR.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -813,7 +814,7 @@ public class MainFrame extends javax.swing.JFrame {
         }
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -856,7 +857,7 @@ public class MainFrame extends javax.swing.JFrame {
               //+ "RETURN a,b";
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -883,7 +884,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH (n) where id(n) = " + jtfMatchNodeID.getText() + " DETACH DELETE n";
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -900,7 +901,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "Match ()-[r]-() Where ID(r)=" + jtfMatchRelationID.getText() + " Delete r";
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            Connection(vrCQL);
+            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             jtaTextfield.append("Exception catched...\n" + ex.toString());
@@ -921,16 +922,22 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jcbSelCreateRelationItemStateChanged
 
     // Java JDBC caller
-    private void Connection(String vrCQL) throws SQLException{
+    private void tryJdbcConnection(String vrCQL) throws SQLException{
         hourglassCursor();
-        try (Connection con = DBConnector_JDBC.getConnection();
+        try (Connection con = DbConnectorJdbc.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(vrCQL); ){
             while (rs.next()) {
                 jtaTextfield.append(rs.getString("n")+ "\n");
             }
-        } catch(SQLException ex) {
-            jtaTextfield.append("Exception catched...\n" + ex.toString());
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Database connection error.\n\n" + ex.toString(),
+                    "error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            //jtaTextfield.append("Exception catched...\n" + ex.toString());
         } finally {
         normalCursor();
         }
@@ -993,6 +1000,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnMatchNodeText;
     private javax.swing.JButton btnMatchRelationSel;
     private javax.swing.JButton btnMatchRelationText;
+    private javax.swing.JButton btnRDReadANode;
+    private javax.swing.JButton btnRDReadARel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1046,7 +1055,5 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jtfToNodeProperty1;
     private javax.swing.JTextField jtfToNodePropertyValue1;
     private javax.swing.JTabbedPane jtpTab1;
-    private javax.swing.JButton tnRDReadANode;
-    private javax.swing.JButton tnRDReadARel;
     // End of variables declaration//GEN-END:variables
 }

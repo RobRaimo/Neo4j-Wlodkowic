@@ -1,8 +1,8 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
+//import java.sql.SQLException;
+//import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -10,15 +10,20 @@ import javax.swing.JOptionPane;
  * and open the template in the editor.
  */
 
-public class DBConnector_JDBC {
+public class DbConnectorJdbc {
 
     //private static String driverName = "com.mysql.jdbc.Driver"; 
-    private static String driverName = "org.neo4j.jdbc.Driver"; 
+    //private static String driverName = "org.neo4j.jdbc.Driver"; 
     private static String urlString = "jdbc:neo4j:bolt://localhost"; 
     private static String userName = "neo4j";   
     private static String passWord = "password";
-    private static Connection con;
+    //private static Connection con;
 
+    public static Connection getConnection() throws Exception {
+        return DriverManager.getConnection(urlString, userName, passWord);
+    }
+    
+    /*
     public static Connection getConnection() {
         try {
             Class.forName(driverName);
@@ -33,4 +38,5 @@ public class DBConnector_JDBC {
         }
         return con;
     }
+    */
 }

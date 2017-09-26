@@ -156,7 +156,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="btnMatchNodeText" alignment="1" max="32767" attributes="0"/>
-                              <Component id="tnRDReadANode" alignment="0" pref="121" max="32767" attributes="0"/>
+                              <Component id="btnRDReadANode" alignment="0" pref="121" max="32767" attributes="0"/>
                               <Component id="btnMatchNodeSel" alignment="1" max="32767" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -194,7 +194,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jtfMatchLimitN" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="tnRDReadANode" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRDReadANode" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       </Group>
@@ -249,12 +249,12 @@
                     <Property name="horizontalAlignment" type="int" value="2"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="tnRDReadANode">
+                <Component class="javax.swing.JButton" name="btnRDReadANode">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Match all Nodes"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tnRDReadANodeActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRDReadANodeActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -274,7 +274,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="tnRDReadARel" max="32767" attributes="0"/>
+                              <Component id="btnRDReadARel" max="32767" attributes="0"/>
                               <Component id="btnMatchRelationText" alignment="0" max="32767" attributes="0"/>
                               <Component id="btnMatchRelationSel" alignment="0" max="32767" attributes="0"/>
                           </Group>
@@ -311,7 +311,7 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="tnRDReadARel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRDReadARel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jtfMatchLimitR" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -367,12 +367,12 @@
                     <Property name="text" type="java.lang.String" value="25"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="tnRDReadARel">
+                <Component class="javax.swing.JButton" name="btnRDReadARel">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Match all Relations"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tnRDReadARelActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRDReadARelActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
