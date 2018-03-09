@@ -3,16 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package jpackage;
+
+import jpackage.DbNodes;
+import jpackage.DbNodesController;
+import jpackage.DbRelations;
+import jpackage.DbRelationsController;
 
 import java.awt.*;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -110,6 +116,8 @@ public class MainFrame extends javax.swing.JFrame {
         btnDeleteRelationByID = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jtfMatchRelationID = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -562,7 +570,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         jtpTab1.addTab("CREATE", jPanel2);
@@ -575,7 +583,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 596, Short.MAX_VALUE)
+            .addGap(0, 539, Short.MAX_VALUE)
         );
 
         jtpTab1.addTab("MODIFY", jPanel3);
@@ -670,10 +678,24 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(465, Short.MAX_VALUE))
+                .addContainerGap(408, Short.MAX_VALUE))
         );
 
         jtpTab1.addTab("DELETE", jPanel4);
+
+        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -686,24 +708,29 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnClearTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnExit))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jtpTab1, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnClearTextfield)
                             .addComponent(btnExit))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1))
-                    .addComponent(jtpTab1))
-                .addContainerGap())
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtpTab1.getAccessibleContext().setAccessibleName("Read");
@@ -726,13 +753,14 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void btnRDReadANodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRDReadANodeActionPerformed
         // TODO add your handling code here:
-        String vrCQL = "MATCH (n) RETURN n LIMIT " + jtfMatchLimitN.getText();
+        String vrCQL = "MATCH (n) RETURN n LIMIT " + jtfMatchLimitN.getText() + "";
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            tryJdbcConnection(vrCQL);
+            matchNodeConnection(vrCQL);
         } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            jtaTextfield.append("Exception catched...\n" + ex.toString());
+            // some code ...
+            //Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            //jtaTextfield.append("Exception catched...\n" + ex.toString());
         }
     }//GEN-LAST:event_btnRDReadANodeActionPerformed
 
@@ -743,8 +771,7 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            jtaTextfield.append("Exception catched...\n" + ex.toString());
+            // some code ...
         }
     }//GEN-LAST:event_btnRDReadARelActionPerformed
 
@@ -755,21 +782,23 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            jtaTextfield.append("Exception catched...\n" + ex.toString());
+            // some code ...
         }
     }//GEN-LAST:event_btnMatchNodeSelActionPerformed
 
     private void btnMatchNodeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchNodeTextActionPerformed
         // TODO add your handling code here:
-        String vrCQL = "MATCH (n:" + jtfMatchNText.getText() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
-        jtaTextfield.setText(vrCQL + "\n\n");
-        try {
-            tryJdbcConnection(vrCQL);
-        } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            jtaTextfield.append("Exception catched...\n" + ex.toString());
-        } 
+        if(jtfMatchNText.getText().isEmpty()){
+            // some code ...
+        } else {
+            String vrCQL = "MATCH (n:" + jtfMatchNText.getText() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
+            jtaTextfield.setText(vrCQL + "\n\n");
+            try {
+                tryJdbcConnection(vrCQL);
+            } catch (SQLException ex) {
+                // some code ...
+            }
+        }
     }//GEN-LAST:event_btnMatchNodeTextActionPerformed
 
     private void btnMatchRelationSelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchRelationSelActionPerformed
@@ -779,8 +808,7 @@ public class MainFrame extends javax.swing.JFrame {
         try {
            tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            jtaTextfield.append("Exception catched...\n" + ex.toString());
+            // some code ...
         }
     }//GEN-LAST:event_btnMatchRelationSelActionPerformed
 
@@ -791,8 +819,7 @@ public class MainFrame extends javax.swing.JFrame {
         try {
             tryJdbcConnection(vrCQL);
         } catch (SQLException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
-            jtaTextfield.append("Exception catched...\n" + ex.toString());
+            // some code ...
         }
     }//GEN-LAST:event_btnMatchRelationTextActionPerformed
 
@@ -927,20 +954,47 @@ public class MainFrame extends javax.swing.JFrame {
         try (Connection con = DbConnectorJdbc.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(vrCQL); ){
+            ((DefaultTableModel)jTable1.getModel()).setRowCount(0);
             while (rs.next()) {
                 jtaTextfield.append(rs.getString("n")+ "\n");
             }
         } catch(Exception ex) {
             JOptionPane.showMessageDialog(
-                    null,
-                    "Database connection error.\n\n" + ex.toString(),
-                    "error",
-                    JOptionPane.ERROR_MESSAGE
+                null, 
+                "Query errors:\n"+ex, 
+                "Query Error", 
+                JOptionPane.ERROR_MESSAGE
             );
-            //jtaTextfield.append("Exception catched...\n" + ex.toString());
-        } finally {
-        normalCursor();
         }
+        normalCursor();
+    }
+    
+    private void matchNodeConnection(String vrCQL) throws SQLException{
+        hourglassCursor();
+        try (Connection con = DbConnectorJdbc.getConnection();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(vrCQL); ){
+            ((DefaultTableModel)jTable1.getModel()).setRowCount(0);        
+            while (rs.next()) {
+                jtaTextfield.append(rs.getString("n")+ "\n");
+                ((DefaultTableModel)jTable1.getModel()).addRow(
+                    new Object[]{
+                        rs.getString("n"),
+                        //rs.getString("n.labels"),
+                        "2",
+                        "3",
+                        "4"
+                    });  
+            }
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(
+                null, 
+                "Query errors:\n"+ex, 
+                "Query Error", 
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        normalCursor();
     }
     
     void hourglassCursor() {
@@ -1031,6 +1085,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> jcbSelCreateNode;
     private javax.swing.JComboBox<String> jcbSelCreateRelation;
     private javax.swing.JComboBox<String> jcbSelFromNode;
