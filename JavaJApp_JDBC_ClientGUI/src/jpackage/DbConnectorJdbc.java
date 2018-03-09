@@ -7,13 +7,13 @@ import javax.swing.JOptionPane;
 
 public class DbConnectorJdbc {
 
-    private static String urlString = "jdbc:neo4j:bolt://localhost"; 
-    private static String userName = "neo4j";   
-    private static String passWord = "password";
+    private static final String URLSTRING = "jdbc:neo4j:bolt://localhost"; 
+    private static final String USERNAME= "neo4j";   
+    private static final String PASSWORD= "password";
 
     public static Connection getConnection() throws Exception {
         try {
-            Connection con = DriverManager.getConnection(urlString, userName, passWord);
+            Connection con = DriverManager.getConnection(URLSTRING, USERNAME, PASSWORD);
             return con; 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(

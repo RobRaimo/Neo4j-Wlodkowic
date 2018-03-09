@@ -5,11 +5,6 @@
  */
 package jpackage;
 
-import jpackage.DbNodes;
-import jpackage.DbNodesController;
-import jpackage.DbRelations;
-import jpackage.DbRelationsController;
-
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -979,8 +974,9 @@ public class MainFrame extends javax.swing.JFrame {
                 jtaTextfield.append(rs.getString("n")+ "\n");
                 ((DefaultTableModel)jTable1.getModel()).addRow(
                     new Object[]{
-                        rs.getString("n"),
-                        //rs.getString("n.labels"),
+                        //rs.getString("n"),
+                        rs.getString("n.labels"),
+                        //rs.get
                         "2",
                         "3",
                         "4"
