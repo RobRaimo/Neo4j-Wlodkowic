@@ -5,6 +5,7 @@
  */
 package jpackage;
 
+import com.fasterxml.jackson.databind.*;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,10 +21,13 @@ import javax.swing.table.DefaultTableModel;
  * @author UserW7
  */
 public class MainFrame extends javax.swing.JFrame {
+    //create Jakson ObjectMapper instance
+    ObjectMapper objObjectMapper = new ObjectMapper();
     
     /**
      * Creates new form MainFrame
      */
+    
     public MainFrame() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -966,20 +970,21 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void matchNodeConnection(String vrCQL) throws SQLException{
         hourglassCursor();
+        DbNodes objDbNodes = new DbNodes();
         try (Connection con = DbConnectorJdbc.getConnection();
              Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(vrCQL); ){
-            ((DefaultTableModel)jTable1.getModel()).setRowCount(0);        
+             ResultSet rs = stmt.executeQuery(vrCQL); 
+            ){
+            ((DefaultTableModel)jTable1.getModel()).setRowCount(0);
             while (rs.next()) {
                 jtaTextfield.append(rs.getString("n")+ "\n");
+                objDbNodes = objObjectMapper.readValue(rs.getString("n"), DbNodes.class);
                 ((DefaultTableModel)jTable1.getModel()).addRow(
                     new Object[]{
-                        //rs.getString("n"),
-                        rs.getString("n.labels"),
-                        //rs.get
-                        "2",
-                        "3",
-                        "4"
+                        objDbNodes.getId(),
+                        objDbNodes.getLabels(),
+                        objDbNodes.getName(),
+                        objDbNodes.getSurname()
                     });  
             }
         } catch(Exception ex) {

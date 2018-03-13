@@ -1,13 +1,16 @@
 package jpackage;
 
+import java.util.List;
+
 public class DbNodes {
     
     // fields
     private int id;
-    private String labels;
+    private List<String> labels;
     private String name;
     private String surname;
     
+    /*
     // constructor
     public DbNodes(int nodeId, String nodeLabels, String nodeName, String nodeSurname) {
         super();
@@ -16,6 +19,11 @@ public class DbNodes {
         name = nodeName;
         surname = nodeSurname;
     }
+
+    DbNodes() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    */
     
     //getter setter methods
     public int getId() {
@@ -26,11 +34,11 @@ public class DbNodes {
         this.id = newId;
     }
     
-    public String getLabel() {
+    public List<String> getLabels() {
         return labels;
     }
     
-    public void setLabel(String newLabel) {
+    public void setLabels(List<String> newLabel) {
         this.labels = newLabel;
     }
     
@@ -48,6 +56,11 @@ public class DbNodes {
     
     public void setSurname(String newSurname) {
         this.surname = newSurname;
+    }
+    
+    @Override
+    public String toString(){
+            return getId() + ", " + getLabels() + ", " + getName() + ", " + getSurname();
     }
     
 }

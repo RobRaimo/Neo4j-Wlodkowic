@@ -19,7 +19,7 @@ public class DbConnectorJdbc {
             JOptionPane.showMessageDialog(
                     null, 
                     "Failed to create the database connection.\n\n"+ex, 
-                    "error", 
+                    "Connector driver error", 
                     JOptionPane.ERROR_MESSAGE
             );
         }
