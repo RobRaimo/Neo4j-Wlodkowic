@@ -4,27 +4,12 @@ import java.util.List;
 
 public class DbNodes {
     
-    // fields
+    // property
     private int id;
     private List<String> labels;
     private String name;
     private String surname;
-    
-    /*
-    // constructor
-    public DbNodes(int nodeId, String nodeLabels, String nodeName, String nodeSurname) {
-        super();
-        id = nodeId;
-        labels = nodeLabels;
-        name = nodeName;
-        surname = nodeSurname;
-    }
-
-    DbNodes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    */
-    
+       
     //getter setter methods
     public int getId() {
         return id;
@@ -60,7 +45,7 @@ public class DbNodes {
     
     @Override
     public String toString(){
-            return getId() + ", " + getLabels() + ", " + getName() + ", " + getSurname();
+            return getId() + " " + getLabels() + " " + getName() + ", " + getSurname();
     }
     
 }

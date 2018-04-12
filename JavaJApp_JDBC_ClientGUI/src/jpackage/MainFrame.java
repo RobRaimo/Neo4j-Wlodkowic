@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,7 +23,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MainFrame extends javax.swing.JFrame {
     //create Jakson ObjectMapper instance
-    ObjectMapper objObjectMapper = new ObjectMapper();
+    ObjectMapper objMapper = new ObjectMapper();
+    DbNodes objDbNodes = null;
+    DbRelations[] objDbRelations = null;
     
     /**
      * Creates new form MainFrame
@@ -32,8 +35,8 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         // READ TAB
-        jtfMatchLimitN.setText("25");
-        jtfMatchLimitR.setText("50");
+        jtfMatchLimitN.setText("50");
+        jtfMatchLimitR.setText("100");
         // CREATE TAB
         jtfNodeProperty1.setText("name");
         jtfNodeProperty2.setText("surname");
@@ -64,6 +67,8 @@ public class MainFrame extends javax.swing.JFrame {
         btnMatchNodeText = new javax.swing.JButton();
         jtfMatchNText = new javax.swing.JTextField();
         btnRDReadANode = new javax.swing.JButton();
+        btnMatchNodeId = new javax.swing.JButton();
+        jtfMatchNId = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         btnMatchRelationSel = new javax.swing.JButton();
         btnMatchRelationText = new javax.swing.JButton();
@@ -172,6 +177,15 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnMatchNodeId.setText("Match by Id");
+        btnMatchNodeId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMatchNodeIdActionPerformed(evt);
+            }
+        });
+
+        jtfMatchNId.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -179,20 +193,19 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRDReadANode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMatchNodeId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMatchNodeText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRDReadANode, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                    .addComponent(btnMatchNodeSel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnMatchNodeSel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtfMatchNId, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jcbSelectNode, javax.swing.GroupLayout.Alignment.TRAILING, 0, 293, Short.MAX_VALUE)
+                    .addComponent(jtfMatchNText, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtfMatchLimitN))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcbSelectNode, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jtfMatchNText, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addComponent(jtfMatchLimitN)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -201,16 +214,20 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMatchNodeSel)
                     .addComponent(jcbSelectNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(8, 8, 8)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnMatchNodeId)
+                    .addComponent(jtfMatchNId))
+                .addGap(8, 8, 8)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMatchNodeText)
                     .addComponent(jtfMatchNText))
-                .addGap(13, 13, 13)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jtfMatchLimitN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRDReadANode))
-                .addGap(6, 6, 6))
+                .addContainerGap())
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Match by Relationship"));
@@ -293,8 +310,8 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -302,9 +319,9 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
 
         jtpTab1.addTab("READ", jPanel1);
@@ -710,9 +727,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnExit))
                     .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -736,14 +751,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnClearTextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearTextfieldActionPerformed
         // TODO add your handling code here:
-        jtaTextfield.setText("");    
+        jtaTextfield.setText("");
+        ((DefaultTableModel)jTable1.getModel()).setRowCount(0);
     }//GEN-LAST:event_btnClearTextfieldActionPerformed
 
     
@@ -768,7 +784,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH n=()-->() RETURN n LIMIT " + jtfMatchLimitR.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            tryJdbcConnection(vrCQL);
+            matchRelationConnection(vrCQL);
         } catch (SQLException ex) {
             // some code ...
         }
@@ -779,7 +795,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH (n:" + jcbSelectNode.getSelectedItem() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            tryJdbcConnection(vrCQL);
+            matchNodeConnection(vrCQL);
         } catch (SQLException ex) {
             // some code ...
         }
@@ -790,10 +806,16 @@ public class MainFrame extends javax.swing.JFrame {
         if(jtfMatchNText.getText().isEmpty()){
             // some code ...
         } else {
-            String vrCQL = "MATCH (n:" + jtfMatchNText.getText() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
+            //String vrCQL = "MATCH (n:" + jtfMatchNText.getText() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
+            String vrCQL = "MATCH (n) "
+                         + "WHERE "
+                         + "n.name CONTAINS '" + jtfMatchNText.getText() + "' OR "
+                         + "n.surname CONTAINS '" + jtfMatchNText.getText() + "' "
+                         + "RETURN n LIMIT " + jtfMatchLimitN.getText();
+            
             jtaTextfield.setText(vrCQL + "\n\n");
             try {
-                tryJdbcConnection(vrCQL);
+                matchNodeConnection(vrCQL);
             } catch (SQLException ex) {
                 // some code ...
             }
@@ -805,7 +827,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH n=()-[r:" + jcbSelectRelation.getSelectedItem() + "]->() RETURN n LIMIT " + jtfMatchLimitR.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-           tryJdbcConnection(vrCQL);
+           matchRelationConnection(vrCQL);
         } catch (SQLException ex) {
             // some code ...
         }
@@ -816,7 +838,7 @@ public class MainFrame extends javax.swing.JFrame {
         String vrCQL = "MATCH n=()-[r:" + jtfMatchRText.getText() + "]->() RETURN n LIMIT " + jtfMatchLimitR.getText();
         jtaTextfield.setText(vrCQL + "\n\n");
         try {
-            tryJdbcConnection(vrCQL);
+            matchRelationConnection(vrCQL);
         } catch (SQLException ex) {
             // some code ...
         }
@@ -933,7 +955,7 @@ public class MainFrame extends javax.swing.JFrame {
             jtaTextfield.append("Exception catched...\n" + ex.toString());
         }  
     }//GEN-LAST:event_btnDeleteRelationByIDActionPerformed
-
+    
     private void jcbSelFromNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbSelFromNodeItemStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_jcbSelFromNodeItemStateChanged
@@ -947,6 +969,25 @@ public class MainFrame extends javax.swing.JFrame {
         setCreatePropertyCBox();
     }//GEN-LAST:event_jcbSelCreateRelationItemStateChanged
 
+    private void btnMatchNodeIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMatchNodeIdActionPerformed
+        // TODO add your handling code here:
+    if(jtfMatchNId.getText().isEmpty()){
+            // some code ...
+        } else {
+            //String vrCQL = "MATCH (n:" + jtfMatchNText.getText() + ") RETURN n LIMIT " + jtfMatchLimitN.getText();
+            String vrCQL = "MATCH (n) "
+                         + "WHERE ID(n) = " + jtfMatchNId.getText() + " "
+                         + "RETURN n ";
+            
+            jtaTextfield.setText(vrCQL + "\n\n");
+            try {
+                matchNodeConnection(vrCQL);
+            } catch (SQLException ex) {
+                // some code ...
+            }
+        }
+    }//GEN-LAST:event_btnMatchNodeIdActionPerformed
+ 
     // Java JDBC caller
     private void tryJdbcConnection(String vrCQL) throws SQLException{
         hourglassCursor();
@@ -970,15 +1011,14 @@ public class MainFrame extends javax.swing.JFrame {
     
     private void matchNodeConnection(String vrCQL) throws SQLException{
         hourglassCursor();
-        DbNodes objDbNodes = new DbNodes();
         try (Connection con = DbConnectorJdbc.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(vrCQL); 
             ){
             ((DefaultTableModel)jTable1.getModel()).setRowCount(0);
             while (rs.next()) {
-                jtaTextfield.append(rs.getString("n")+ "\n");
-                objDbNodes = objObjectMapper.readValue(rs.getString("n"), DbNodes.class);
+                objDbNodes = objMapper.readValue(rs.getString("n"), DbNodes.class);
+                jtaTextfield.append(objDbNodes.toString()+ "\n");
                 ((DefaultTableModel)jTable1.getModel()).addRow(
                     new Object[]{
                         objDbNodes.getId(),
@@ -998,6 +1038,37 @@ public class MainFrame extends javax.swing.JFrame {
         normalCursor();
     }
     
+    private void matchRelationConnection(String vrCQL) throws SQLException{
+        hourglassCursor();
+        try (Connection con = DbConnectorJdbc.getConnection();
+             Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(vrCQL); 
+            ){
+            ((DefaultTableModel)jTable1.getModel()).setRowCount(0);
+            while (rs.next()) {
+                objDbRelations = objMapper.readValue(rs.getString("n"), DbRelations[].class);
+                jtaTextfield.append(Arrays.toString(objDbRelations)+ "\n");
+                String startLabelName = objDbRelations[0].getLabels().toString() + " " + objDbRelations[0].getName();
+                String endLabelName = objDbRelations[2].getLabels().toString() + " " + objDbRelations[2].getName().toString();
+                ((DefaultTableModel)jTable1.getModel()).addRow(
+                    new Object[]{
+                        objDbRelations[1].getId(),
+                        startLabelName,
+                        objDbRelations[1].getType(),
+                        endLabelName
+                    });
+            }
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(
+                null, 
+                "Query errors:\n"+ex, 
+                "Query Error", 
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        normalCursor();
+    }
+        
     void hourglassCursor() {
         Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
         setCursor(hourglassCursor);
@@ -1051,6 +1122,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteNodeByID;
     private javax.swing.JButton btnDeleteRelationByID;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnMatchNodeId;
     private javax.swing.JButton btnMatchNodeSel;
     private javax.swing.JButton btnMatchNodeText;
     private javax.swing.JButton btnMatchRelationSel;
@@ -1099,6 +1171,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jtfFromNodePropertyValue1;
     private javax.swing.JTextField jtfMatchLimitN;
     private javax.swing.JTextField jtfMatchLimitR;
+    private javax.swing.JTextField jtfMatchNId;
     private javax.swing.JTextField jtfMatchNText;
     private javax.swing.JTextField jtfMatchNodeID;
     private javax.swing.JTextField jtfMatchRText;
