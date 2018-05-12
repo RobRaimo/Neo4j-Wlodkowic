@@ -19,3 +19,44 @@
         normalCursor();
     }
 */
+
+
+CLASS RELATIONS -------------------------------------------------------
+
+MATCH n=()-->() RETURN n LIMIT 100
+
+[{"id":0, "labels":["Clients"], "name":"PKOBP"}, {"id":10, "type":"ORDERS_FOR", "startId":0, "endId":3}, {"id":3, "labels":["Projects"], "name":"BatchPaymentService"}]
+[{"id":0, "labels":["Clients"], "name":"PKOBP"}, {"id":9, "type":"ORDERS_FOR", "startId":0, "endId":2}, {"id":2, "labels":["Projects"], "name":"RESTAccountingSystem"}]
+[{"id":1, "labels":["Clients"], "name":"GoogleInc"}, {"id":13, "type":"ORDERS_FOR", "startId":1, "endId":6}, {"id":6, "labels":["Projects"], "name":"GoogleSearchEngine"}]
+[{"id":1, "labels":["Clients"], "name":"GoogleInc"}, {"id":12, "type":"ORDERS_FOR", "startId":1, "endId":5}, {"id":5, "labels":["Projects"], "name":"GoogleHealth"}]
+[{"id":1, "labels":["Clients"], "name":"GoogleInc"}, {"id":11, "type":"ORDERS_FOR", "startId":1, "endId":4}, {"id":4, "labels":["Projects"], "name":"GoogleCalendar"}]
+[{"id":2, "labels":["Projects"], "name":"RESTAccountingSystem"}, {"id":16, "type":"STACKED_ON", "startId":2, "endId":16}, {"id":16, "labels":["Stacks"], "name":"Jetty"}]
+[{"id":2, "labels":["Projects"], "name":"RESTAccountingSystem"}, {"id":15, "type":"STACKED_ON", "startId":2, "endId":10}, {"id":10, "labels":["Stacks"], "name":"ApacheCXF"}]
+[{"id":2, "labels":["Projects"], "name":"RESTAccountingSystem"}, {"id":14, "type":"STACKED_ON", "startId":2, "endId":14}, {"id":14, "labels":["Stacks"], "name":"Java8"}]
+[{"id":3, "labels":["Projects"], "name":"BatchPaymentService"}, {"id":18, "type":"STACKED_ON", "startId":3, "endId":15}, {"id":15, "labels":["Stacks"], "name":"JavaScript"}]
+[{"id":3, "labels":["Projects"], "name":"BatchPaymentService"}, {"id":17, "type":"STACKED_ON", "startId":3, "endId":12}, {"id":12, "labels":["Stacks"], "name":"C++"}]
+[{"id":4, "labels":["Projects"], "name":"GoogleCalendar"}, {"id":21, "type":"STACKED_ON", "startId":4, "endId":18}, {"id":18, "labels":["Stacks"], "name":"NodeJS"}]
+[{"id":4, "labels":["Projects"], "name":"GoogleCalendar"}, {"id":20, "type":"STACKED_ON", "startId":4, "endId":15}, {"id":15, "labels":["Stacks"], "name":"JavaScript"}]
+[{"id":4, "labels":["Projects"], "name":"GoogleCalendar"}, {"id":19, "type":"STACKED_ON", "startId":4, "endId":19}, {"id":19, "labels":["Stacks"], "name":"OracleDB"}]
+[{"id":5, "labels":["Projects"], "name":"GoogleHealth"}, {"id":24, "type":"STACKED_ON", "startId":5, "endId":11}, {"id":11, "labels":["Stacks"], "name":"AngularJS"}]
+[{"id":5, "labels":["Projects"], "name":"GoogleHealth"}, {"id":23, "type":"STACKED_ON", "startId":5, "endId":15}, {"id":15, "labels":["Stacks"], "name":"JavaScript"}]
+[{"id":5, "labels":["Projects"], "name":"GoogleHealth"}, {"id":22, "type":"STACKED_ON", "startId":5, "endId":19}, {"id":19, "labels":["Stacks"], "name":"OracleDB"}]
+[{"id":6, "labels":["Projects"], "name":"GoogleSearchEngine"}, {"id":28, "type":"STACKED_ON", "startId":6, "endId":12}, {"id":12, "labels":["Stacks"], "name":"C++"}]
+[{"id":6, "labels":["Projects"], "name":"GoogleSearchEngine"}, {"id":27, "type":"STACKED_ON", "startId":6, "endId":13}, {"id":13, "labels":["Stacks"], "name":"extJS"}]
+[{"id":6, "labels":["Projects"], "name":"GoogleSearchEngine"}, {"id":26, "type":"STACKED_ON", "startId":6, "endId":15}, {"id":15, "labels":["Stacks"], "name":"JavaScript"}]
+[{"id":6, "labels":["Projects"], "name":"GoogleSearchEngine"}, {"id":25, "type":"STACKED_ON", "startId":6, "endId":17}, {"id":17, "labels":["Stacks"], "name":"Neo4j"}]
+[{"id":7, "labels":["Developers"], "surname":"Zalewski", "name":"Tomasz"}, {"id":4, "type":"ENGAGED_IN", "startId":7, "endId":5}, {"id":5, "labels":["Projects"], "name":"GoogleHealth"}]
+[{"id":7, "labels":["Developers"], "surname":"Zalewski", "name":"Tomasz"}, {"id":3, "type":"ENGAGED_IN", "startId":7, "endId":4}, {"id":4, "labels":["Projects"], "name":"GoogleCalendar"}]
+[{"id":7, "labels":["Developers"], "surname":"Zalewski", "name":"Tomasz"}, {"id":1, "type":"ENGAGED_IN", "startId":7, "endId":2}, {"id":2, "labels":["Projects"], "name":"RESTAccountingSystem"}]
+[{"id":8, "labels":["Developers"], "surname":"Fusik", "name":"Przemyslaw"}, {"id":6, "type":"ENGAGED_IN", "startId":8, "endId":6}, {"id":6, "labels":["Projects"], "name":"GoogleSearchEngine"}]
+[{"id":8, "labels":["Developers"], "surname":"Fusik", "name":"Przemyslaw"}, {"id":2, "type":"ENGAGED_IN", "startId":8, "endId":3}, {"id":3, "labels":["Projects"], "name":"BatchPaymentService"}]
+[{"id":8, "labels":["Developers"], "surname":"Fusik", "name":"Przemyslaw"}, {"id":0, "type":"ENGAGED_IN", "startId":8, "endId":2}, {"id":2, "labels":["Projects"], "name":"RESTAccountingSystem"}]
+[{"id":9, "labels":["Developers"], "surname":"Raimondi", "name":"Roberto"}, {"id":8, "type":"ENGAGED_IN", "startId":9, "endId":6}, {"id":6, "labels":["Projects"], "name":"GoogleSearchEngine"}]
+[{"id":9, "labels":["Developers"], "surname":"Raimondi", "name":"Roberto"}, {"id":5, "type":"ENGAGED_IN", "startId":9, "endId":5}, {"id":5, "labels":["Projects"], "name":"GoogleHealth"}]
+
+
+[
+ {"id":0, "labels":["Clients"], "name":"PKOBP"}, 
+ {"id":10, "type":"ORDERS_FOR", "startId":0, "endId":3}, 
+ {"id":3, "labels":["Projects"], "name":"BatchPaymentService"}
+]
